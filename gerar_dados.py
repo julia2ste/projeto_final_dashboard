@@ -8,8 +8,8 @@ datas = pd.date_range('2023-01-01','2025-12-31', freq='D')
 # gerar dados de vendas 
 dados = pd.DataFrame({
     'Data': np.random.choice(datas, n),
-    'Produto': np.random.choice('Headset','Mouse','Teclado','Headphone',
-                                'Wedcam','SSD','Memoria RAM',n),
+    'Produto': np.random.choice(['Headset','Mouse','Teclado','Headphone',
+                                'Wedcam','SSD','Memoria RAM'],n),
     'Categoria': np.random.choice(['Informatica'],n),
     'Regiao': np.random.choice(['Norte','Sul','Nordeste','Sudeste','Centro-Oeste'],n),
     'Vendedor': np.random.choice(['Ana Silva','Bruno Costa','Carla Dias','Doego Lima'],n),
@@ -17,3 +17,11 @@ dados = pd.DataFrame({
     'Quantidade': np.random.randint(1,30,n),
     'Custo':np.random.uniform(80,8000,n)
 })
+
+#campo calculado
+dados['Lucro'] = dados['Vendas'] - dados['Custo']
+
+#transforma os dados em csv
+dados.to_csv('./dados/vendas.csv', index=False)
+
+print("Dados de vendas gerados e salvos em'./dados/vendas.csv'")
