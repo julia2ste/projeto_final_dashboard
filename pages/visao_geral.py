@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+
 def carregar_dados():
 # carregar os daods de vendas
     df = pd.read_csv('dados/vendas.csv')
@@ -12,7 +13,7 @@ def carregar_dados():
 # e um dataframe do pandas que contem os dados de vendas
 dados_vendas = carregar_dados()
 
-st.title("***:red[Visao] :orange[Geral de] :yellow[Negocio] :blue[❤]***")
+st.title("***:red[Visao] :orange[Geral de] :yellow[Negocio] :green[𓁹‿𓁹]***")
 
 #KPIs principais
 col1, col2 ,col3 ,col4 =st.columns(4)
@@ -78,3 +79,5 @@ with colB:
                  color_continuous_scale='gnbu')
     
     st.plotly_chart(fig, width='stretch')
+
+
