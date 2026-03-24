@@ -59,17 +59,29 @@ else:
      st.warning("Por favor, selecione un intervalo de datas valido")
      st.stop()
 
+#usando slider como filtro de valor por vendas
+min_venda = df["Vendas"].min()
+max_venda = df["Vendas"].max()
+
+faixa = st.sidebar.slider(
+    "Faixa de Valor da Venda (R$):",
+    min_value=float(min_venda),
+    max_value=float(max_venda),
+    value=(float(min_venda), float(max_venda))
+)
 
 #aplicando os filtros selecionados pelo usuario para criar um dataframe filtrado
 dados_filtrados = mapa_vendas[
-(mapa_vendas["Região"].isin(regioes))&
-(mapa_vendas["Categoria"].isin(Categoria))&
-(mapa_vendas["Produto"].isin(Produtos)) &
-(mapa_vendas["Vendedor"].isin(Vendedor))&
+(mapa_vendas["Região"]==regioes)&
+(mapa_vendas["Categoria"]==Categoria)&
+(mapa_vendas["Produto"]==Produtos) &
+(mapa_vendas["Vendedor"]==Vendedor)&
 (mapa_vendas["Data"].between(
        data_inicio,
        data_fim
      ))]
+
+
 
 
 col1,col2,col3,col4 = st.columns(4)
@@ -86,3 +98,21 @@ st.text ("Distribuição Geográfica das Transações")
 dados_filtrados.rename(columns={"Latitude":"LATITUDE","Longitude":"LONGITUDE"},inplace=True)
 
 st.map(dados_filtrados)
+
+#criando tabela sobre o resumo de imformacoes por cidades
+st.title("Resumo por Cidade")
+
+resumo_dados = df.groupby(["Cidade", "Região"]).agg({
+    "Receita": "sum",
+    "Lucro": "sum",
+}).reset_index()
+
+# resumo_dados=dados_filtrados[
+#   (resumo_dados["Receita"]==(Vendas).sum())&
+#   (resumo_dados['Cidade']==(Cidade))&
+#   (resumo_dados['Região']== (regioes))&
+#   (resumo_dados['Lucro']== (Lucro))
+#   ]
+ 
+
+st.dataframe( resumo_dados[['Cidade','Região','Lucro']].reset_index(drop=True))
