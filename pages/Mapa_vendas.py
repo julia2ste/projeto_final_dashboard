@@ -102,10 +102,10 @@ st.map(dados_filtrados)
 #criando tabela sobre o resumo de imformacoes por cidades
 st.title("Resumo por Cidade")
 
-resumo_dados = df.groupby(["Cidade", "Região"]).agg({
-    "Receita": "sum",
-    "Lucro": "sum",
-}).reset_index()
+# resumo_dados = df.groupby(["Cidade", "Região"]).agg({
+#     "Receita": "sum",
+#     "Lucro": "sum",
+# }).reset_index()
 
 # resumo_dados=dados_filtrados[
 #   (resumo_dados["Receita"]==(Vendas).sum())&
