@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 #criando uma variavel e colocar parta ler os dados de um arquivo
-sobre = pd.read_csv('dados/Vendas.csv')
+sobre = pd.read_csv('dados/vendas.csv')
 
 st.title("❗Sobre a web")
 
