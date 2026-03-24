@@ -100,19 +100,21 @@ dados_filtrados.rename(columns={"Latitude":"LATITUDE","Longitude":"LONGITUDE"},i
 st.map(dados_filtrados)
 
 #criando tabela sobre o resumo de imformacoes por cidades
-st.title("Resumo por Cidade")
+    # ── Tabela de resumo por cidade ───────────────────────────────────────────
+st.divider()
+st.subheader("Resumo por Cidade")
 
-# resumo_dados = df.groupby(["Cidade", "Região"]).agg({
-#     "Receita": "sum",
-#     "Lucro": "sum",
-# }).reset_index()
+resumo_cidade = (
+        dados_filtrados.groupby(["Cidade", "Região"])
+        .agg(
+            Transações=("Vendas", "count"),
+            Receita=("Vendas", "sum"),
+            Lucro=("Lucro", "sum"),
+        )
+        .reset_index()
+        .sort_values("Receita", ascending=False)
+    )
+resumo_cidade["Receita"] = resumo_cidade["Receita"].map("R$ {:,.2f}".format)
+resumo_cidade["Lucro"] = resumo_cidade["Lucro"].map("R$ {:,.2f}".format)
 
-# resumo_dados=dados_filtrados[
-#   (resumo_dados["Receita"]==(Vendas).sum())&
-#   (resumo_dados['Cidade']==(Cidade))&
-#   (resumo_dados['Região']== (regioes))&
-#   (resumo_dados['Lucro']== (Lucro))
-#   ]
- 
-
-st.dataframe( resumo_dados[['Cidade','Região','Lucro']].reset_index(drop=True))
+st.dataframe(resumo_cidade, use_container_width=True, hide_index=True)
