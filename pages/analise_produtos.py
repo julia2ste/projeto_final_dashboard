@@ -24,7 +24,7 @@ def format_brl(value):
     return formatted_value
 
 #criando uma variavel e colocar parta ler os dados de um arquivo
-dados_produtos = pd.read_csv('dados/Vendas.csv')
+dados_produtos = pd.read_csv('dados/vendas.csv')
 
 df = pd.DataFrame(dados_produtos)
 
